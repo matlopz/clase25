@@ -1,0 +1,20 @@
+
+    
+ <!DOCTYPE html>
+
+<h2>Carrito de Compras</h2>
+
+{{#each cartRender}}
+<li>
+<strong>ID:</strong> {{product._id}}<br>
+<strong>Título:</strong>  {{product.title}}<br>
+ <strong>Precio:</strong> ${{product.price}}<br>
+Cantidad: {{quantity}}<br>
+</li>
+{{/each}}
+
+
+<script src="/js/carrito.js"></script>
+
+</body>
+</html>
