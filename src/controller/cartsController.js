@@ -38,17 +38,17 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.post('/:cid/product/:pid', async (req, res) => {
+router.post('/product/:pid', async (req, res) => {
   try {
-    const cid = req.params.cid;
-    const pid = req.params.pid;
-    const quantity = req.body.quantity; 
-
+    const cart = req.body; // Obtén el cartId de los parámetros de la URL
+    const cartId=cart.cartId
+    const productId = req.params.pid;
+    console.log('cart tiene: ', productId)
     // Agregar el producto al carrito utilizando el servicio cartsService
-    const result = await cartsService.addProductToCart(cid, pid, quantity);
+    const result = await cartsService.addProductToCart(cartId, productId);
 
-    // Emitir el producto agregado al carrito a través de Socket.IO
-    io.emit('productAddedToCart', { cartId: cid, product: result });
+
+
 
     res.status(result.statusCode || 200).json(result);
   } catch (err) {

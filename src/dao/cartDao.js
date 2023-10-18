@@ -25,48 +25,17 @@ const cartDao = {
       const cart = await Cart.findById(cartId).populate('products.product');
       return cart;
     } catch (error) {
-        console.log(error)
       throw new Error('Error fetching cart by ID');
     }
   },
 
-  async addProductToCart(cartId, productId, quantity) {
+  async saveCart(cart) {
     try {
-      const cart = await Cart.findById(cartId);
-      if (!cart) {
-        return { error: 'El carrito no existe' };
-      }
-
-      const existingProduct = cart.products.find(item => item.product.equals(productId));
-
-      if (existingProduct) {
-        existingProduct.quantity += quantity;
-      } else {
-        cart.products.push({ product: productId, quantity });
-      }
-
-      await cart.save();
-      return existingProduct || cart.products[cart.products.length - 1];
+      return await cart.save();
     } catch (error) {
-      throw new Error('Error agregar product al cart');
+      throw new Error('Error al guardar el carrito: ' + error.message);
     }
   },
-
-  async removeProductFromCart(cartId, productId) {
-    try {
-      const cart = await Cart.findById(cartId);
-      if (!cart) {
-        return { error: 'El carrito no existe' };
-      }
-
-      cart.products = cart.products.filter(item => !item.product.equals(productId));
-
-      await cart.save();
-      return { message: 'Product eliminado del carrito' };
-    } catch (error) {
-      throw new Error('Error eliminando product del carrito');
-    }
-  }
 };
 
 module.exports = cartDao;

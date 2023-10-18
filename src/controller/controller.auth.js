@@ -2,12 +2,6 @@ const express = require('express');
 const passport = require('passport')
 const usuarioService = require('../services/usuarioService');
 const router = express.Router();
-const { comparePassword } = require('../utils/bcrypts');
-const Usuarios = require('../models/Users.Model');
-
-const jwt = require('passport-jwt')
-const cookieExtractor = require('../utils/cookie.extractor');
-const { generateToken } = require('../utils/jwt');
 
 
 router.get('/register', (req, res) => {
@@ -18,6 +12,7 @@ router.post('/register', passport.authenticate('register', { failureRedirect: '/
   async (req, res) => {
 
     try {
+   
       res.status(201).json({ status: 'success', payload: req.user });
     } catch (error) {
       console.log(error);
@@ -35,7 +30,6 @@ router.get('/login', (req, res) => {
 })
 router.post('/login', async (req, res) => {
   try {
-    //const cartId = user.cart[0].product.toString();
     const { email, password } = req.body
     console.log(req.body)
 

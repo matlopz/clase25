@@ -111,7 +111,7 @@ const setupAddToCartButtons = async () => {
                     try {
 
                         console.log(productId)
-                        const url = `/carts/${cartId}/product/${productId}`;
+                        const url = `/carts/product/${productId}`;
 
                         console.log('que tiene URL: ', url)
                         const response = await fetch(url, {
@@ -136,8 +136,15 @@ const setupAddToCartButtons = async () => {
                 }
             });
         });
+        const verCarritoButton = document.getElementById('verCarritoButton');
+        if (verCarritoButton) {
+          verCarritoButton.addEventListener('click', () => {
+            window.location.href = `/views/carritos/${cartId}`;
+          });
+        }
     } catch (error) {
         console.error('Error al realizar la solicitud:', error);
     }
 };
+
 
